@@ -6,7 +6,7 @@ from utils import process_dates_to_weeks
 def plot_day_tweets_count(df):
     """ Plot number of tweets per day. """
 
-    df = process_dates_to_weeks(df)
+    df['Day'] = df.Date.apply(lambda x: x.day)
     df = df.groupby(by='Day').agg(lambda x: x.to_list()).reset_index()
     df['Count'] = df.Date.apply(lambda x: len(x))
     df = df.sort_values(by='Day')
@@ -20,7 +20,7 @@ def plot_day_tweets_count(df):
 def plot_day_likes_count(df):
     """ Plot number of likes the tweets get per day. """
 
-    df = process_dates_to_weeks(df)
+    df['Day'] = df.Date.apply(lambda x: x.day)
     df = df.groupby(by='Day').agg(lambda x: x.to_list()).reset_index()
     df['Count'] = df.Likes.apply(lambda x: sum(x))
     df = df.sort_values(by='Day')
