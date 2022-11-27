@@ -3,7 +3,7 @@ import pandas as pd
 import snscrape.modules.twitter as sntwitter
 import streamlit as st
 
-@st.cache()
+@st.cache(allow_output_mutation=True)
 def get_tweets(user_name, start_date, end_date, limit = 500):
     """ Get tweets using the library."""
 

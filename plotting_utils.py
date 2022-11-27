@@ -1,8 +1,16 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
+import streamlit as st
+import plotly.figure_factory as ff
 
-from utils import process_dates_to_weeks
+def plot_sentiment_distribution(tweets_sentiment):
+    """ Plot distribution of sentiments for this user. """
+    
+    fig = ff.create_distplot(
+        [tweets_sentiment], group_labels = ["Sentiment score"], bin_size=[0.02])
 
+    st.plotly_chart(fig, use_container_width=True)
+    
 def plot_day_tweets_count(df):
     """ Plot number of tweets per day. """
 
@@ -14,8 +22,7 @@ def plot_day_tweets_count(df):
     fig = plt.figure(figsize=(10, 4))
     sns.barplot(data = df, x = 'Day', y = 'Count')
     plt.title("Number of Tweets published in January.")
-    
-    return fig
+    st.pyplot(fig)
 
 def plot_day_likes_count(df):
     """ Plot number of likes the tweets get per day. """
@@ -28,5 +35,5 @@ def plot_day_likes_count(df):
     fig = plt.figure(figsize=(10, 4))
     sns.barplot(data = df, x = 'Day', y = 'Count')
     plt.title("Number of likes tweets received in January.")
-    return fig
+    st.pyplot(fig)
     
