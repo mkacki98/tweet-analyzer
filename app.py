@@ -1,7 +1,7 @@
 import streamlit as st
 import spacy 
 
-from utils import get_tweets
+from utils import get_tweets, check_format
 from nlp_utils import get_clean_tweets, get_nouns, get_sentiments
 from plotting_utils import plot_day_tweets_count, plot_day_likes_count, plot_sentiment_distribution
 
@@ -30,46 +30,48 @@ def app():
             "Input other Twitter account name."
         )
 
-    if not user_input_name:
-        user_input_name = default_user_name
-
-    # Currently just one month (to be extended)
-    start_date = "2022-01-01"
-    end_date = "2022-01-31"
-
-    df = get_tweets(user_input_name, start_date, end_date)
-
-    if len(df) == 0:
-        st.markdown("Sorry, I can'f find this user name, can you change it?")
+    end_date = st.text_input("Input the date in format `YYYY-MM-DD`.", "2022-01-31")
+    
+    if not check_format(end_date):
+        st.markdown("Please make sure you use the right format for the input end date.")
     else:
-        tweets = df.Tweet.values
-        docs = list(nlp.pipe(tweets))
 
-        tweets_clean = get_clean_tweets(docs) 
-        tweets_nouns = get_nouns(docs)
+        if not user_input_name:
+            user_input_name = default_user_name
 
-        tweets_sentiment = get_sentiments(tweets_clean)
+        df = get_tweets(user_input_name, end_date)
 
-        st.markdown(f"Average sentiment score for `{user_input_name}` is {round(sum(tweets_sentiment)/len(df),3)}")
+        if len(df) == 0:
+            st.markdown("Sorry, I can'f find this user name, can you change it?")
+        else:
+            tweets = df.Tweet.values
+            docs = list(nlp.pipe(tweets))
 
-        st.markdown("""---""")
+            tweets_clean = get_clean_tweets(docs) 
+            tweets_nouns = get_nouns(docs)
 
-        max_idx = tweets_sentiment.index(max(tweets_sentiment))
-        min_idx = tweets_sentiment.index(min(tweets_sentiment))
+            tweets_sentiment = get_sentiments(tweets_clean)
 
-        st.markdown(f"The most hateful Tweet is: `{tweets[max_idx]}` \n with score of {round(tweets_sentiment[max_idx],3)}")
-        st.markdown(f"The least hateful Tweet is: `{tweets[min_idx]}` \n with score of {round(tweets_sentiment[min_idx],3)}")
+            st.markdown(f"Average sentiment score for `{user_input_name}` is {round(sum(tweets_sentiment)/len(df),3)}")
 
-        st.markdown("""---""")
+            st.markdown("""---""")
 
-        plot_sentiment_distribution(tweets_sentiment)
+            max_idx = tweets_sentiment.index(max(tweets_sentiment))
+            min_idx = tweets_sentiment.index(min(tweets_sentiment))
 
-        st.markdown("""---""")
-        
-        st.subheader(f"User `{user_input_name}` has published `{len(df)}` Tweets in January 2022.")
-        
-        plot_day_tweets_count(df)
-        plot_day_likes_count(df)
+            st.markdown(f"The most hateful Tweet is: `{tweets[max_idx]}` \n with score of {round(tweets_sentiment[max_idx],3)}")
+            st.markdown(f"The least hateful Tweet is: `{tweets[min_idx]}` \n with score of {round(tweets_sentiment[min_idx],3)}")
+
+            st.markdown("""---""")
+
+            plot_sentiment_distribution(tweets_sentiment)
+
+            st.markdown("""---""")
+            
+            st.subheader(f"User `{user_input_name}` has published `{len(df)}` Tweets in January 2022.")
+            
+            plot_day_tweets_count(df)
+            plot_day_likes_count(df)
 
 
 
