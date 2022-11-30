@@ -1,9 +1,9 @@
 import streamlit as st
 import spacy 
 
-from utils import get_tweets, check_format
+from utils import get_tweets, check_format, compute_features_to_plot
 from nlp_utils import get_clean_tweets, get_nouns, get_sentiments
-from plotting_utils import plot_day_tweets_count, plot_day_likes_count, plot_sentiment_distribution
+from plotting_utils import plot_timeseries_barplot, plot_sentiment_distribution
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -44,7 +44,7 @@ def app():
         if len(df) == 0:
             st.markdown("Sorry, I can'f find this user name, can you change it?")
         else:
-            tweets = df.Tweet.values
+            tweets = df.tweet.values
             docs = list(nlp.pipe(tweets))
 
             tweets_clean = get_clean_tweets(docs) 
@@ -64,14 +64,16 @@ def app():
 
             st.markdown("""---""")
 
+            df_features = compute_features_to_plot(df)
             plot_sentiment_distribution(tweets_sentiment)
 
             st.markdown("""---""")
             
             st.subheader(f"User `{user_input_name}` has published `{len(df)}` Tweets in January 2022.")
             
-            plot_day_tweets_count(df)
-            plot_day_likes_count(df)
+            plot_timeseries_barplot(df_features, column = 'tweet_count', title = 'Number of tweets per day.')
+            plot_timeseries_barplot(df_features, column = 'avg_likes_per_day', title = 'Average number of likes received per day.')
+            plot_timeseries_barplot(df_features, column = 'virality_score', title = 'Virality of tweets per day.')
 
 
 
