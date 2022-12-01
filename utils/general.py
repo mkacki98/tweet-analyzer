@@ -33,7 +33,6 @@ def compute_features_to_plot(df):
 
     return df[['tweet_count', 'virality_score']]
 
-
 @st.experimental_memo()
 def get_tweets(user_name, end_date, limit = 500):
     """ Get tweets from the last § using the package."""
@@ -45,13 +44,12 @@ def get_tweets(user_name, end_date, limit = 500):
 
     query = f"(from:{user_name}) until:{end_date} since:{start_date}"
 
-    for tweet in sntwitter.TwitterSearchScraper(query).get_items():
-
-        if len(tweets) == limit:
-            break
-
-        tweets.append([tweet.date, tweet.user.username, tweet.rawContent, tweet.likeCount, tweet.retweetCount, tweet.quoteCount])
-
+    tweet_generator = sntwitter.TwitterSearchScraper(query).get_items()
+    tweets = [[tweet for tweet in tweet_generator] for _ in range(limit)]
+    tweets = [item for sublist in tweets for item in sublist]
+    
+    tweets = [[tweet.date, tweet.user.username, tweet.rawContent, tweet.likeCount, tweet.retweetCount, tweet.quoteCount] for tweet in tweets]
+    
     return pd.DataFrame(tweets, columns = ["date", "user", "tweet", "likes", "retweets", "quotes"])
 
 def check_format(date):
