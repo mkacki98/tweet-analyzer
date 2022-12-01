@@ -37,7 +37,7 @@ def compute_features_to_plot(df):
 def get_tweets(user_name, end_date, limit = 500):
     """ Get tweets from the last § using the package."""
 
-    start_date = datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days = 3)
+    start_date = datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days = 7)
     start_date = datetime.strftime(start_date, "%Y-%m-%d")
 
     query = f"(from:{user_name}) until:{end_date} since:{start_date}"
