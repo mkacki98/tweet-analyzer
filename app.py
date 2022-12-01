@@ -3,7 +3,7 @@ import spacy
 
 from utils.general import make_space, remove_spaces, get_tweets, check_format, compute_features_to_plot, get_user_info
 from utils.nlp import get_clean_tweets, get_nouns, get_polarity_scores
-from utils.plotting import plot_timeseries_barplot, plot_polarity_distribution, display_profile_image, plot_likes_distribution, display_profile_polarity
+from utils.plotting import plot_timeseries_barplot, plot_polarity_distribution, display_profile_image, plot_correlation, plot_likes_distribution, display_profile_polarity
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -61,6 +61,7 @@ def app():
             tweets_nouns = get_nouns(docs)
 
             tweets_polarity = get_polarity_scores(tweets_clean)
+            df['polarity'] = tweets_polarity
 
             df_features = compute_features_to_plot(df)
 
@@ -78,12 +79,10 @@ def app():
                 most_liked = df[df.likes == max(df.likes)]
 
                 st.markdown(f"User `{user_input_name}` has published `{len(df)}` that month time.")
-                make_space(2)
 
                 st.markdown(f"This tweet went viral and gained `{most_liked.likes.values[0]}` likes: \n") 
-                st.markdown(f"It was also retweeted `{most_liked.retweets.values[0]}` times and quoted `{most_liked.quotes.values[0]}` times.")
-
                 st.subheader(f"*{remove_spaces(most_liked.tweet.values[0])}*")
+                st.markdown(f"It was also retweeted `{most_liked.retweets.values[0]}` times and quoted `{most_liked.quotes.values[0]}` times.")
 
             st.markdown("""---""")
 
@@ -108,7 +107,19 @@ def app():
 
             st.markdown("""---""")
 
+            col1, col2 = st.columns(2)
 
+            corr = df[['polarity', 'likes', 'retweets', 'quotes']].corr()
+
+            with col1:
+                plot_correlation(corr)
+
+            with col2:
+                
+                st.markdown("Correlations between *polarity* and *likes* with other feaures: \n ")
+                st.dataframe(corr[['polarity', 'likes']])
+        
+            st.markdown("---")
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide")

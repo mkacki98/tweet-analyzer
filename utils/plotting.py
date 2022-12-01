@@ -1,4 +1,6 @@
 import streamlit as st
+import matplotlib.pyplot as plt
+import seaborn as sns
 import plotly.figure_factory as ff
 import plotly.express as px
 
@@ -7,6 +9,11 @@ import urllib.request
 
 from utils.general import make_space
 
+def plot_correlation(corr):
+    """ Plot correlation between features. """
+
+    fig = px.imshow(corr)
+    st.write(fig)
 
 def display_profile_polarity(avg_polarity):
     """ Return the judgement on the profile's polarity based on the average score. """
@@ -14,9 +21,9 @@ def display_profile_polarity(avg_polarity):
     judgement = "neutral"
 
     if avg_polarity < 0.25:
-        judgement = "positive"
-    if avg_polarity > 0.75:
         judgement = "negative"
+    if avg_polarity > 0.75:
+        judgement = "positive"
 
     st.subheader(f"This accounts' tweets are generally `{judgement}`, the average polarity score is `{avg_polarity}`.")
 
