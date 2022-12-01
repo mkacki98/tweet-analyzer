@@ -4,6 +4,15 @@ import streamlit as st
 
 from datetime import datetime, timedelta
 
+def make_space(n):
+    """ Create blank space between lines in the app. """
+    for i in range(n):
+        st.write("\n")
+
+def remove_spaces(input_string):
+    """ Remove \n in strings to avoid formatting problems. """
+    return input_string.replace("\n", " ")
+    
 def get_virality_score(x, _min, _max):
     """ Normalise average number of likes per tweet to get a [0,1] score. """
     return (x - _min)/(_max - _min)
@@ -22,7 +31,7 @@ def compute_features_to_plot(df):
     max_likes_per_tweet = max(df.avg_likes_per_tweet)
     df['virality_score'] = df.apply(lambda x: get_virality_score(x.avg_likes_per_tweet, min_likes_per_tweet, max_likes_per_tweet), axis = 1)
 
-    return df[['tweet_count', 'avg_likes_per_day', 'virality_score']]
+    return df[['tweet_count', 'virality_score']]
 
 
 @st.experimental_memo()
@@ -31,7 +40,7 @@ def get_tweets(user_name, end_date, limit = 500):
 
     tweets = []
 
-    start_date = datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days = 28)
+    start_date = datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days = 3)
     start_date = datetime.strftime(start_date, "%Y-%m-%d")
 
     query = f"(from:{user_name}) until:{end_date} since:{start_date}"
@@ -41,9 +50,9 @@ def get_tweets(user_name, end_date, limit = 500):
         if len(tweets) == limit:
             break
 
-        tweets.append([tweet.date, tweet.user.username, tweet.rawContent, tweet.likeCount])
+        tweets.append([tweet.date, tweet.user.username, tweet.rawContent, tweet.likeCount, tweet.retweetCount, tweet.quoteCount])
 
-    return pd.DataFrame(tweets, columns = ["date", "user", "tweet", "likes"])
+    return pd.DataFrame(tweets, columns = ["date", "user", "tweet", "likes", "retweets", "quotes"])
 
 def check_format(date):
     """ Check if the format is as desired. """

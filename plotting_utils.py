@@ -13,6 +13,7 @@ def plot_sentiment_distribution(tweets_sentiment):
     st.plotly_chart(fig, use_container_width=True)
 
 def plot_timeseries_barplot(df, column, title):
+    """ Plot pre-computed time-series features of the account. """
 
     fig = px.bar(df.reset_index(), x='day', 
             y=column, 
