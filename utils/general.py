@@ -37,20 +37,29 @@ def compute_features_to_plot(df):
 def get_tweets(user_name, end_date, limit = 500):
     """ Get tweets from the last § using the package."""
 
-    tweets = []
-
     start_date = datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days = 3)
     start_date = datetime.strftime(start_date, "%Y-%m-%d")
 
     query = f"(from:{user_name}) until:{end_date} since:{start_date}"
 
     tweet_generator = sntwitter.TwitterSearchScraper(query).get_items()
+
     tweets = [[tweet for tweet in tweet_generator] for _ in range(limit)]
     tweets = [item for sublist in tweets for item in sublist]
+
+    tweets_data = [[tweet.date, tweet.user.username, tweet.rawContent, tweet.likeCount, tweet.retweetCount, tweet.quoteCount] for tweet in tweets]
     
-    tweets = [[tweet.date, tweet.user.username, tweet.rawContent, tweet.likeCount, tweet.retweetCount, tweet.quoteCount] for tweet in tweets]
+    return pd.DataFrame(tweets_data, columns = ["date", "user", "tweet", "likes", "retweets", "quotes"])
+
+@st.experimental_memo()
+def get_user_info(user_name):
+    """ Get information from user profile. """
     
-    return pd.DataFrame(tweets, columns = ["date", "user", "tweet", "likes", "retweets", "quotes"])
+    user_generator = sntwitter.TwitterProfileScraper(user_name).get_items()
+    user = list(next(user_generator) for _ in range(1))[0].user
+
+    return [user.profileImageUrl, user.followersCount]
+
 
 def check_format(date):
     """ Check if the format is as desired. """
