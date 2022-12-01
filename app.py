@@ -1,9 +1,9 @@
 import streamlit as st
 import spacy 
 
-from utils.general import make_space, remove_spaces, get_tweets, check_format, compute_features_to_plot
+from utils.general import make_space, remove_spaces, get_tweets, check_format, compute_features_to_plot, get_user_info
 from utils.nlp import get_clean_tweets, get_nouns, get_sentiments
-from utils.plotting import plot_timeseries_barplot, plot_sentiment_distribution
+from utils.plotting import plot_timeseries_barplot, plot_sentiment_distribution, display_profile_image
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -37,18 +37,23 @@ def app():
     if not check_format(end_date):
         with col1:
             st.markdown("Please make sure you use the right format for the input end date.")
-    
+
     else:
 
         if not user_input_name:
             user_input_name = default_user_name
 
         df = get_tweets(user_input_name, end_date)
+        user_info = get_user_info(user_input_name)
 
         if len(df) == 0:
             with col1:
                 st.markdown("Sorry, I can'f find this user name, can you change it?")
         else:
+
+            with col2: 
+                display_profile_image(user_info[0], user_input_name)
+
             tweets = df.tweet.values
             docs = list(nlp.pipe(tweets))
 
