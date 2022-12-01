@@ -1,10 +1,9 @@
 import streamlit as st
 import spacy 
-from datetime import datetime
 
-from utils import make_space, remove_spaces, get_tweets, check_format, compute_features_to_plot
-from nlp_utils import get_clean_tweets, get_nouns, get_sentiments
-from plotting_utils import plot_timeseries_barplot, plot_sentiment_distribution
+from utils.general import make_space, remove_spaces, get_tweets, check_format, compute_features_to_plot
+from utils.nlp import get_clean_tweets, get_nouns, get_sentiments
+from utils.plotting import plot_timeseries_barplot, plot_sentiment_distribution
 
 nlp = spacy.load("en_core_web_sm")
 
