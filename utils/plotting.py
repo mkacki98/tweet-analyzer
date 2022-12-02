@@ -26,9 +26,9 @@ def display_correlation_prompts(corr):
 
     polarity_corr = corr.iloc[0]
 
-    st.markdown(f"Number of likes is {get_correlation_judgement(polarity_corr.likes)} correlated with polarity. \n")
-    st.markdown(f"Number of retweets is {get_correlation_judgement(polarity_corr.retweets)} correlated with polarity. \n")
-    st.markdown(f"Number of quotes is {get_correlation_judgement(polarity_corr.quotes)} correlated with polarity.")
+    st.markdown(f"Number of likes is `{get_correlation_judgement(polarity_corr.likes)}` correlated with polarity. \n")
+    st.markdown(f"Number of retweets is `{get_correlation_judgement(polarity_corr.retweets)}` correlated with polarity. \n")
+    st.markdown(f"Number of quotes is `{get_correlation_judgement(polarity_corr.quotes)}` correlated with polarity.")
 
 def plot_correlation(corr):
     """ Plot correlation between features. """
