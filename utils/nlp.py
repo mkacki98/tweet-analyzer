@@ -19,9 +19,9 @@ def get_spectrum_scores(model_output):
     """ Get polarity scores in [-1, 1] range. """
 
     if model_output['label'] == "POSITIVE":
-        return model_output['score']
-    if model_output['label'] == "NEGATIVE":
         return -1 * model_output['score']
+    if model_output['label'] == "NEGATIVE":
+        return model_output['score']
     return 0
 
 def get_polarity_scores(docs):

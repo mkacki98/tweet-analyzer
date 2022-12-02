@@ -21,12 +21,16 @@ def display_profile_polarity(avg_polarity):
     judgement = "neutral"
 
     if avg_polarity < 0.25:
-        judgement = "negative"
-    if avg_polarity > 0.75:
+        judgement = "very positive"
+    if avg_polarity >= 0.25 and avg_polarity < 0.4:
         judgement = "positive"
 
-    st.subheader(f"This accounts' tweets are generally `{judgement}`, the average polarity score is `{avg_polarity}`.")
+    if avg_polarity > 0.6 and avg_polarity <= 0.75:
+        judgement = "negative"
+    if avg_polarity > 0.75:
+        judgement = "very negative"
 
+    st.subheader(f"This accounts' tweets are generally `{judgement}`, the average polarity score is `{avg_polarity}`.")
 
 def plot_likes_distribution(df):
     """ Plot distribution of likes per tweet. """
@@ -39,7 +43,7 @@ def display_profile_image(profile_image_url, user_name):
 
     urllib.request.urlretrieve(profile_image_url, 'profile_image.jpg')
 
-    return st.image(Image.open('profile_image.jpg'), caption= f"{user_name}", use_column_width = 'never', width = 200)
+    return st.image(Image.open('profile_image.jpg'), caption= f"{user_name}", use_column_width = 'never', width = 125)
                     
 def plot_polarity_distribution(tweets_polarity):
     """ Plot distribution of polarity scores for this user. """

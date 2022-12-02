@@ -21,10 +21,16 @@ def app():
         default_user_name = st.selectbox(
                 "Select one of the sample Twitter profiles.",
                 (
+                    "bbclaurak",
                     "elonmusk",
+                    "AJEnglish",
+                    "bbc",
+                    "FoxNews",
                     "BarackObama", 
-                    "justinbieber", 
-                    "Cristiano"
+                    "OwenJones84", 
+                    "ChomNoam_",
+                    "ScottishLabour",
+                    "ScotTories",
                 ),
             )
 
@@ -44,15 +50,22 @@ def app():
             user_input_name = default_user_name
 
         df = get_tweets(user_input_name, end_date)
-        user_info = get_user_info(user_input_name)
 
         if len(df) == 0:
             with col1:
                 st.markdown(f"Sorry, I can'f find `{user_input_name}`, can you change it?")
         else:
+            user_info = get_user_info(user_input_name)
 
-            with col2: 
-                display_profile_image(user_info[0], user_input_name)
+            with st.sidebar:
+                st.markdown("---")
+                st.markdown("You are seeing the Tweet analysis of user:")
+
+                _, center_column, _, _ = st.columns(4)
+                with center_column: 
+                    display_profile_image(user_info[0], user_input_name)    
+
+                st.markdown("---")
 
             tweets = df.tweet.values
             docs = list(nlp.pipe(tweets))
@@ -99,11 +112,11 @@ def app():
                 max_idx = tweets_polarity.index(max(tweets_polarity))
                 min_idx = tweets_polarity.index(min(tweets_polarity))
 
-                st.markdown(f"The most hateful tweet `{user_input_name}` has published: \n")
-                st.subheader(f"*{remove_spaces(tweets[min_idx])}*")
-                
-                st.markdown(f"The least hateful tweet `{user_input_name}` has published: \n ")
+                st.markdown(f"Tweet with the highest polarity that `{user_input_name}` has published: \n")
                 st.subheader(f"*{remove_spaces(tweets[max_idx])}*")
+                
+                st.markdown(f"Tweet with the lowest polarity that `{user_input_name}` has published: \n ")
+                st.subheader(f"*{remove_spaces(tweets[min_idx])}*")
 
             st.markdown("""---""")
 
