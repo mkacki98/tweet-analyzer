@@ -9,6 +9,27 @@ import urllib.request
 
 from utils.general import make_space
 
+def get_correlation_judgement(corr):
+    """ Return the verbal evaluation of correlation between polarity and another variable. """
+
+    corr = abs(corr)
+
+    if corr > 0 and corr < 0.2:
+        return "weakly"
+    if corr >= 0.2 and corr < 0.5:
+        return "moderately"
+    if corr >= 0.5:
+        return "strongly"
+
+def display_correlation_prompts(corr):
+    """ Display information on how strongly correlated polarity is with another variables. """
+
+    polarity_corr = corr.iloc[0]
+
+    st.markdown(f"Number of likes is {get_correlation_judgement(polarity_corr.likes)} correlated with polarity. \n")
+    st.markdown(f"Number of retweets is {get_correlation_judgement(polarity_corr.retweets)} correlated with polarity. \n")
+    st.markdown(f"Number of quotes is {get_correlation_judgement(polarity_corr.quotes)} correlated with polarity.")
+
 def plot_correlation(corr):
     """ Plot correlation between features. """
 

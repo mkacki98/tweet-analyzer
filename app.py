@@ -3,7 +3,7 @@ import spacy
 
 from utils.general import make_space, remove_spaces, get_tweets, check_format, compute_features_to_plot, get_user_info
 from utils.nlp import get_clean_tweets, get_nouns, get_polarity_scores
-from utils.plotting import plot_timeseries_barplot, plot_polarity_distribution, display_profile_image, plot_correlation, plot_likes_distribution, display_profile_polarity
+from utils.plotting import plot_timeseries_barplot, plot_polarity_distribution, display_correlation_prompts, display_profile_image, plot_correlation, plot_likes_distribution, display_profile_polarity
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -121,16 +121,13 @@ def app():
             st.markdown("""---""")
 
             col1, col2 = st.columns(2)
-
             corr = df[['polarity', 'likes', 'retweets', 'quotes']].corr()
 
             with col1:
                 plot_correlation(corr)
 
             with col2:
-                
-                st.markdown("Correlations between *polarity* and *likes* with other feaures: \n ")
-                st.dataframe(corr[['polarity', 'likes']])
+                display_correlation_prompts(corr)
         
             st.markdown("---")
 
