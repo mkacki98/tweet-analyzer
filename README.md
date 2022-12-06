@@ -1,14 +1,15 @@
-# Todo
+# Tweet Analyser
 
-- Add something to say "this nickname doesn't exist, pick something else"
-- Add buttons, so that we can seamlessly change between different nicknames.
-* Rearrange the plots to be on two columns and change them to black background
-* Add likes overview - e.g. return the most liked Tweet 
-* Make sure the sentiment analyser works well, perhaps use a different one.
-* Add WordCloud of the most common nouns.
+This is a Streamlit web application that does a simple analysis of tweets from a given account. The app is hosted on Streamlit cloud and you can access it here `XYZ`.
 
-- How can I add the model/data somewhere, so it doesn't have to download it each time?
-    -- added st.cache(), should work
+`[gif goes here]`
 
-* Add docstrings everywhere, pass it through linting and formatter.
-* Deploy the model with the Streamlit cloud.
+### Installation
+
+If you want to play around with the code yourself, create a fresh environment with pip/conda. My environment was running Python `3.8.10`.
+
+`git clone xyz`
+`python -m venv .venv`
+`source .venv/bin/activate`
+`pip install -r requirements.txt`
+
