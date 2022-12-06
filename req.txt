@@ -1,0 +1,10 @@
+spacy
+scipy
+transformers
+streamlit
+snscrape
+seaborn
+matplotlib
+plotly
+pandas
+
