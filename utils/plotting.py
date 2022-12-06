@@ -3,11 +3,25 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.figure_factory as ff
 import plotly.express as px
+from wordcloud import WordCloud
 
 from PIL import Image
 import urllib.request
 
 from utils.general import make_space
+
+def plot_nouns_wordcloud(tweets_nouns):
+    """ Plot wordlclouds given nouns extracted from tweets."""  
+
+    text = " ".join([item for sublist in tweets_nouns for item in sublist])
+
+    wordcloud = WordCloud().generate(text)
+    fig, x = plt.subplots()
+
+    x.imshow(wordcloud, interpolation='bilinear')
+    x.axis("off")
+
+    st.pyplot(fig)
 
 def get_correlation_judgement(corr):
     """ Return the verbal evaluation of correlation between polarity and another variable. """

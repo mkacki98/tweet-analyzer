@@ -3,7 +3,7 @@ import spacy
 
 from utils.general import make_space, get_start_date, remove_spaces, get_tweets, check_format, compute_features_to_plot, get_user_info
 from utils.nlp import get_clean_tweets, get_nouns, get_polarity_scores
-from utils.plotting import plot_timeseries_barplot, plot_polarity_distribution, display_correlation_prompts, display_profile_image, plot_correlation, plot_likes_distribution, display_profile_polarity
+from utils.plotting import plot_timeseries_barplot, plot_nouns_wordcloud, plot_polarity_distribution, display_correlation_prompts, display_profile_image, plot_correlation, plot_likes_distribution, display_profile_polarity
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -72,11 +72,14 @@ def app():
 
             tweets_clean = get_clean_tweets(docs) 
             tweets_nouns = get_nouns(docs)
-
+        
             tweets_polarity = get_polarity_scores(tweets_clean)
             df['polarity'] = tweets_polarity
 
             df_features = compute_features_to_plot(df)
+
+            with col2:
+                plot_nouns_wordcloud(tweets_nouns)
 
             st.markdown("---")
             col1, col2 = st.columns(2)
@@ -127,7 +130,7 @@ def app():
                 plot_correlation(corr)
 
             with col2:
-                display_correlation_prompts(corr)
+                display_correlation_prompts(corr) 
         
             st.markdown("---")
 
