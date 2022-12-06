@@ -9,7 +9,20 @@ classifier = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english")
 
 
 def get_clean_tweets(docs):
-    """Clean Tweets from URLs/mentiones."""
+    """
+    Clean Tweets from URLs/mentiones.
+
+    Parameters
+    ----------
+    docs : SpaCy's Doc Object
+        all the tokens passed through SpaCy pipeline that contains their features
+        (PoS etc.)
+
+    Returns
+    -------
+    list of list
+        each list contains nouns extracted from a tweet as an element
+    """
 
     tokens_filtered = [
         [token.text for token in tweet if filter_tweets(token)] for tweet in docs
@@ -47,7 +60,7 @@ def get_polarity_scores(docs):
 
 
 def filter_tweets(token):
-    """Return False is a token is an URL, a mention or something weird/irrelevant."""
+    """Return False is a token is an URl or a mention."""
 
     if token.like_url == True:
         return False
@@ -57,7 +70,7 @@ def filter_tweets(token):
 
 
 def filter_non_nouns(token):
-    """Return False if a token is not a noun or a proper noun."""
+    """Return False if a token is not a noun or a proper noun, is a mention or a link."""
 
     if token.pos_ not in ["NOUN", "PROPN"]:
         return False

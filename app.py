@@ -4,7 +4,6 @@ import streamlit as st
 import spacy
 
 from utils.general import (
-    make_space,
     get_start_date,
     remove_spaces,
     get_tweets,
@@ -29,6 +28,7 @@ nlp = spacy.load("en_core_web_sm")
 
 
 def app():
+    """Main function running the app."""
 
     with st.sidebar:
         st.subheader("Tweeter Analyzer")

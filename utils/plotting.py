@@ -10,11 +10,15 @@ import urllib.request
 from wordcloud import WordCloud
 from PIL import Image
 
-from utils.general import make_space
-
 
 def plot_nouns_wordcloud(tweets_nouns):
-    """Plot wordlclouds given nouns extracted from tweets."""
+    """Plot a Wordlcloud given nouns extracted from tweets.
+
+    Parameters
+    ----------
+    tweets_nouns : list of lists
+        each list contains nouns extracted from a given tweet
+    """
 
     text = " ".join([item for sublist in tweets_nouns for item in sublist])
 
@@ -28,7 +32,20 @@ def plot_nouns_wordcloud(tweets_nouns):
 
 
 def get_correlation_judgement(corr):
-    """Return the verbal evaluation of correlation between polarity and another variable."""
+    """
+    Return the verbal evaluation of correlation between polarity
+    and other variables.
+
+    Parameters
+    ----------
+    corr : float
+        correlation score
+
+    Returns
+    -------
+    str
+        subjective judgement of how strong the correlation is
+    """
 
     corr = abs(corr)
 
@@ -41,7 +58,15 @@ def get_correlation_judgement(corr):
 
 
 def display_correlation_prompts(corr):
-    """Display information on how strongly correlated polarity is with another variables."""
+    """
+    Display information on how strongly correlated polarity
+    is with another variables.
+
+    Parameters
+    ----------
+    corr : pd.DataFrame
+        dataframe of correlations between polarity and other variables
+    """
 
     polarity_corr = corr.iloc[0]
 
@@ -96,7 +121,7 @@ def plot_likes_distribution(df):
 
 
 def display_profile_image(profile_image_url, user_name):
-    """Display profile image of the user."""
+    """Retrieve and display profile image of the user."""
 
     urllib.request.urlretrieve(profile_image_url, "profile_image.jpg")
 
