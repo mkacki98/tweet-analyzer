@@ -80,15 +80,15 @@ def app():
                     f"Sorry, I can'f find `{user_input_name}`, can you change it?"
                 )
         else:
-            user_info = get_user_info(user_input_name)
+            #user_info = get_user_info(user_input_name)
 
             with st.sidebar:
                 st.markdown("---")
                 st.markdown("You are seeing the Tweeter analysis of user:")
 
                 _, center_column, _, _ = st.columns(4)
-                with center_column:
-                    display_profile_image(user_info[0], user_input_name)
+                #with center_column:
+                #    display_profile_image(user_info[0], user_input_name)
 
                 st.markdown("---")
 
