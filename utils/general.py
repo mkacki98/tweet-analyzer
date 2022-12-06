@@ -1,7 +1,6 @@
 """ General helper module with useful functions. """
 
 import pandas as pd
-import snscrape.modules.twitter as sntwitter
 import streamlit as st
 
 from datetime import datetime, timedelta
@@ -134,7 +133,7 @@ def get_user_info(user_name):
         image URL and the number of followers
     """
 
-    user_generator = sntwitter.TwitterProfileScraper(user_name).get_items()
+    user_generator = sntwitter.TwitterUserScraper(user_name).get_items()
     user = list(next(user_generator) for _ in range(1))[0].user
 
     return [user.profileImageUrl, user.followersCount]

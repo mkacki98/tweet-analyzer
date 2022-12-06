@@ -87,7 +87,7 @@ def app():
                         f"Sorry, I can'f find `{user_input_name}`, can you change it?"
                     )
             else:
-                #user_info = get_user_info(user_input_name)
+                user_info = get_user_info(user_input_name)
                 with col1:
                     st.markdown(f"I am displaying the analysis for the period `{start_date}` to `{end_date}`.")
                 
@@ -96,8 +96,9 @@ def app():
                     st.markdown("You are seeing the Tweeter analysis of user:")
 
                     _, center_column, _, _ = st.columns(4)
-                    #with center_column:
-                    #    display_profile_image(user_info[0], user_input_name)
+                    with center_column:
+                        display_profile_image(user_info[0], user_input_name)
+                        st.markdown(f"This user has {user_info[1]} followers.")
 
                     st.markdown("---")
 
