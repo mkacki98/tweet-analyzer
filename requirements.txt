@@ -1,12 +1,13 @@
-spacy
-scipy
-transformers
-streamlit
+spacy==3.0.8
+scipy==1.9.3
+transformers==4.25.1
+streamlit==1.15.2
 snscrape
-seaborn
-matplotlib
-plotly
-pandas
-torch
+seaborn==0.12.1
+matplotlib==3.6.2
+plotly==5.11.0
+pandas==1.5.2
+torch==1.13.0+cpu
+wordcloud==1.8.2.2
 en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0-py3-none-any.whl
 
