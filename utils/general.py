@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 
 from datetime import datetime, timedelta
+import snscrape.modules.twitter as sntwitter
 
 
 def get_start_date(end_date, days_offset):
