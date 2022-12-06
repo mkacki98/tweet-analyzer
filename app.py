@@ -98,7 +98,8 @@ def app():
                     _, center_column, _, _ = st.columns(4)
                     with center_column:
                         display_profile_image(user_info[0], user_input_name)
-                        st.markdown(f"This user has {user_info[1]} followers.")
+                    
+                    st.markdown(f"This user has `{user_info[1]}` followers.")
 
                     st.markdown("---")
 
