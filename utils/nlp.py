@@ -48,6 +48,8 @@ def filter_non_nouns(token):
 
     if token.pos_ not in ["NOUN", "PROPN"]:
         return False
+    if token.like_url:
+        return False
     if "@" in token.text:
         return False
 
