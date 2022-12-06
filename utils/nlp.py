@@ -2,7 +2,7 @@ import spacy
 from transformers import pipeline
 
 nlp = spacy.load("en_core_web_sm")
-classifier = pipeline("sentiment-analysis")
+classifier = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english")
 
 def get_clean_tweets(docs):
     """ Clean Tweets from URLs/mentiones."""
