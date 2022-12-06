@@ -11,7 +11,7 @@ def app():
 
     with st.sidebar:
         st.subheader("Tweeter Analyzer")
-        st.markdown("This Streamlit application analyses tweets published by a given user together with some of their linguistic feautres like sentiment.")
+        st.markdown("This Streamlit application analyses tweets published by a given user together with some of their linguistic feautres like sentiment/polarity.")
 
         st.markdown("@mkacki98 on Github")
 
@@ -59,13 +59,22 @@ def app():
 
             with st.sidebar:
                 st.markdown("---")
-                st.markdown("You are seeing the Tweet analysis of user:")
+                st.markdown("You are seeing the Tweeter analysis of user:")
 
                 _, center_column, _, _ = st.columns(4)
                 with center_column: 
                     display_profile_image(user_info[0], user_input_name)    
 
                 st.markdown("---")
+
+                st.markdown("The model used for text classification (sentiment analysis), called DestilBERT, was introduced by HuggingFace in [Sahn et al., 2019]")
+                st.markdown("The architecture of DestilBERT is a student/teacher one where the student (DestilBERT) is trained in a self-supervised way to replicate what the teacher (BERT) is doing.")
+                st.markdown("The resulting model is 40% smaller, 60% faster and retains 97% of the language understanding capabilities.")
+
+                st.markdown("It is uses knowledge destilation, a technique in which a bigger model is used as a teacher to train a lighter version of the teacher.")
+
+                st.markdown("---")
+
 
             tweets = df.tweet.values
             docs = list(nlp.pipe(tweets))
@@ -133,6 +142,8 @@ def app():
                 display_correlation_prompts(corr) 
         
             st.markdown("---")
+
+
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide")
