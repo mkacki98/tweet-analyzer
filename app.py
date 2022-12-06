@@ -59,8 +59,12 @@ def app():
         user_input_name = st.text_input("Input other Twitter account name.")
 
         end_date = st.text_input("Input the date in format `YYYY-MM-DD`.", "2022-01-31")
-        day_offset = st.number_input("How many days back from the end_date you want to investigate?", 7)
+        day_offset = st.number_input("How many days back from the end_date you want to investigate? Pick a number from 1 to 28.", 7)
     
+    if day_offset > 28 or day_offset < 1:
+        with col1:
+            st.markdown("Please make sure the number you put is in [1, 28] range.")
+
     if not check_format(end_date):
         with col1:
             st.markdown(
@@ -69,7 +73,7 @@ def app():
 
 
     else:
-
+        
         if not user_input_name:
             user_input_name = default_user_name
 
@@ -84,7 +88,8 @@ def app():
         else:
             #user_info = get_user_info(user_input_name)
             with col1:
-                st.markdown(f"I am displaying the analysis for the period {start_date} to {end_date}.")
+                st.markdown(f"I am displaying the analysis for the period `{start_date}` to `{end_date}`.")
+            
             with st.sidebar:
                 st.markdown("---")
                 st.markdown("You are seeing the Tweeter analysis of user:")
