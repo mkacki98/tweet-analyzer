@@ -1,8 +1,9 @@
 # Tweet Analyser
 
-This is a Streamlit web application that does a simple analysis of tweets from a given account. The app is hosted on Streamlit cloud and you can access it here `https://mkacki98-tweet-analyzer-app-3ynagl.streamlit.app/`.
+This is a Streamlit web application that does a simple analysis of tweets from a given account. The app is hosted on Streamlit cloud and you can access it here:
 
-`[gif goes here]`
+`https://mkacki98-tweet-analyzer-app-3ynagl.streamlit.app/`.
+
 
 ### Installation
 
