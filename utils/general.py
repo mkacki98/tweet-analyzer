@@ -7,7 +7,7 @@ import streamlit as st
 from datetime import datetime, timedelta
 
 
-def get_start_date(end_date, days_offset=7):
+def get_start_date(end_date, days_offset):
     """
     Given an end_date and number of days to offset,
     return the string of a start_date.
