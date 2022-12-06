@@ -1,7 +1,7 @@
 import streamlit as st
 import spacy 
 
-from utils.general import make_space, remove_spaces, get_tweets, check_format, compute_features_to_plot, get_user_info
+from utils.general import make_space, get_start_date, remove_spaces, get_tweets, check_format, compute_features_to_plot, get_user_info
 from utils.nlp import get_clean_tweets, get_nouns, get_polarity_scores
 from utils.plotting import plot_timeseries_barplot, plot_polarity_distribution, display_correlation_prompts, display_profile_image, plot_correlation, plot_likes_distribution, display_profile_polarity
 
@@ -27,11 +27,10 @@ def app():
                     "bbc",
                     "FoxNews",
                     "BarackObama", 
-                    "OwenJones84", 
-                    "ChomNoam_",
+                    "OwenJones84",
                     "ScottishLabour",
                     "ScotTories",
-                ),
+                )
             )
 
         user_input_name = st.text_input(
@@ -49,7 +48,8 @@ def app():
         if not user_input_name:
             user_input_name = default_user_name
 
-        df = get_tweets(user_input_name, end_date)
+        start_date = get_start_date(end_date)
+        df = get_tweets(user_input_name, start_date, end_date)
 
         if len(df) == 0:
             with col1:
@@ -91,7 +91,7 @@ def app():
 
                 most_liked = df[df.likes == max(df.likes)]
 
-                st.markdown(f"User `{user_input_name}` has published `{len(df)}` that month time.")
+                st.markdown(f"User `{user_input_name}` has published `{len(df)}` tweets between {start_date} and {end_date}.")
 
                 st.markdown(f"This tweet went viral and gained `{most_liked.likes.values[0]}` likes: \n") 
                 st.subheader(f"*{remove_spaces(most_liked.tweet.values[0])}*")

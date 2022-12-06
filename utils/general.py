@@ -4,6 +4,12 @@ import streamlit as st
 
 from datetime import datetime, timedelta
 
+def get_start_date(end_date, days_offset = 7):
+    """ Given an end_date and number of days to offse, return the string of a start_date. """
+    
+    start_date = datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days = days_offset)
+    return datetime.strftime(start_date, "%Y-%m-%d")
+
 def make_space(n):
     """ Create blank space between lines in the app. """
     for i in range(n):
@@ -34,11 +40,8 @@ def compute_features_to_plot(df):
     return df[['tweet_count', 'virality_score']]
 
 @st.experimental_memo()
-def get_tweets(user_name, end_date, limit = 500):
+def get_tweets(user_name, start_date, end_date, limit = 500):
     """ Get tweets from the last § using the package."""
-
-    start_date = datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days = 7)
-    start_date = datetime.strftime(start_date, "%Y-%m-%d")
 
     query = f"(from:{user_name}) until:{end_date} since:{start_date}"
 
@@ -47,7 +50,7 @@ def get_tweets(user_name, end_date, limit = 500):
     tweets = [[tweet for tweet in tweet_generator] for _ in range(limit)]
     tweets = [item for sublist in tweets for item in sublist]
 
-    tweets_data = [[tweet.date, tweet.user.username, tweet.rawContent, tweet.likeCount, tweet.retweetCount, tweet.quoteCount] for tweet in tweets]
+    tweets_data = [[tweet.date, tweet.user.username, tweet.content, tweet.likeCount, tweet.retweetCount, tweet.quoteCount] for tweet in tweets]
     
     return pd.DataFrame(tweets_data, columns = ["date", "user", "tweet", "likes", "retweets", "quotes"])
 
