@@ -1,3 +1,5 @@
+""" General helper module with useful functions. """
+
 import pandas as pd
 import snscrape.modules.twitter as sntwitter
 import streamlit as st

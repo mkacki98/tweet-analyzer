@@ -1,3 +1,5 @@
+""" Main module running the Streamlit app. """
+
 import streamlit as st
 import spacy 
 
@@ -142,8 +144,6 @@ def app():
                 display_correlation_prompts(corr) 
         
             st.markdown("---")
-
-
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide")

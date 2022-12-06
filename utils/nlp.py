@@ -1,3 +1,5 @@
+""" A helper module with language processing functions. """
+
 import spacy 
 from transformers import pipeline
 

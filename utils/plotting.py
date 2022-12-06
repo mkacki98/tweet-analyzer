@@ -1,3 +1,5 @@
+""" Helper file for plotting functions and displaying prompts. """
+
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
