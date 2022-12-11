@@ -4,6 +4,7 @@ This is a Streamlit web application that does a simple analysis of tweets from a
 
 `https://mkacki98-tweet-analyzer-app-3ynagl.streamlit.app/`.
 
+Note that Streamlit freezes the app if it doesn't receive calls for 5 days. It may take a few minutes to run the app if it has been frozen.
 
 ### Installation
 
@@ -16,3 +17,4 @@ If you want to play around with the code yourself, create a fresh environment wi
 `source .venv/bin/activate`
 
 `pip install -r requirements.txt`
+
