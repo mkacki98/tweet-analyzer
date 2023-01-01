@@ -18,3 +18,7 @@ If you want to play around with the code yourself, create a fresh environment wi
 
 `pip install -r requirements.txt`
 
+### GIF
+
+![](https://github.com/mkacki98/tweet-analyzer/blob/main/tweet-analyser.gif)
+
